@@ -14,7 +14,9 @@
 
 <script>
 
-  import axios from 'axios';
+import axios from 'axios';
+const config = require('../../config/kgrid');
+
 
 export default {
   name: 'SelectGenotype',
@@ -22,13 +24,14 @@ export default {
     return {
       genotype: null,
       result: null,
-      error: false
+      error: false,
+      koPath: config.activatorPath + config.knowledgeObjectFunctionPath
     }
   },
   methods: {
     change() {
       this.result = "Please wait...";
-      axios.post("https://activator.kgrid.org/99999/fk4n99hh99/v0.0.1/rs1967309interpret", {
+      axios.post(this.koPath, {
         'twoBases': this.genotype
       }).then((resp) => {
         this.result = resp.data.result;
